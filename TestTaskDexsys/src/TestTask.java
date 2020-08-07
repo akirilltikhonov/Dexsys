@@ -23,16 +23,21 @@ public class TestTask {
     //    0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
 //    24 23 22 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1
 //    0 -1 -3 -7 -14 -18 -21
+//    -15.d -12.f -9. -6.0f -3.0d +0f 3d 6.00 +09.0
+//    -15.1d -12.1f -9.01d -6.01f -3.1 +0.1f 3.1d 6.01 +09.1
+
     public static void main(String[] args) throws IOException {
-        System.out.println("The application receives on the input nothing or string array consisting of integer value.\n" +
-                "For example, \" -3 -1 0 1 3 7\".\n" +
+
+        System.out.println("The application receives on the input nothing or string array consisting of integer or/and float/double values.\n" +
+                "For example: \"-3 -1 0 1 3 7\" or \"-15.d -12.f -9. -6.0f -3.0d +0f 3d 6.00 +09.0\".\n" +
                 "Three lists are displayed on the console which are divided without remainder by 3, 7 and 21.\n" +
-                "Call 'help' to get all applications commands.\n");
+                "Call 'help' to get all application commands.\n");
         try {
             init(args);
         } catch (NumberFormatException e) {
             System.out.println("Incorrect input program arguments. " +
-                    "The application receives on the input nothing or string array consisting of integer value.");
+                    "The application receives on the input nothing or string array consisting of integer or/and float/double numbers.\n" +
+                    "Fix input data and try again");
             System.exit(0);
         }
         printAll();
@@ -43,7 +48,11 @@ public class TestTask {
 
             while (!(str = reader.readLine()).equals("exit")) {
 
-                if (str.matches("init(\\s[-+]?\\d+)+\\s*")) {
+                // regex only for integer "init(\\s[-+]?\\d+)+\\s*"
+                // regex for integer and decimal numbers "init(\\s[-+]?\\d+(.\\d+)?)+\\s*"
+                // regex for Integer, Float and Double in all entry forms (almost) "init(\\s[-+]?\\d*((\\.\\d*))?(d|f)?)+\\s*"
+
+                if (str.matches("init(\\s[-+]?\\d+((\\.\\d*))?(d|f)?)+\\s*")) {
                     String[] array = str.substring(5).split(" ");
                     init(array);
                 }
@@ -71,17 +80,24 @@ public class TestTask {
             anyMore = false;
 
             for (String arg : array) {
-                int num = Integer.parseInt(arg);
+//                int num = Integer.parseInt(arg);
+                double num = Double.parseDouble(arg);
                 boolean flag3;
                 boolean flag7;
                 if (flag3 = (num % 3 == 0)) {
-                    list3.add(num);
+                    if (!list3.contains((int) num)) {
+                        list3.add((int) num);
+                    }
                 }
                 if (flag7 = (num % 7 == 0)) {
-                    list7.add(num);
+                    if (!list7.contains((int) num)) {
+                        list7.add((int) num);
+                    }
                 }
                 if (flag3 && flag7) {
-                    list21.add(num);
+                    if (!list21.contains((int) num)) {
+                        list21.add((int) num);
+                    }
                 } else if (!anyMore && !(flag3 || flag7)) {
                     anyMore = true;
                 }
@@ -101,7 +117,6 @@ public class TestTask {
         print(list3, Type.L3);
         print(list7, Type.L7);
         print(list21, Type.L21);
-        System.out.println();
     }
 
     static public void print(List<Integer> list, Type type) {
@@ -110,6 +125,7 @@ public class TestTask {
         } else {
             System.out.println(String.format("List %s : %s", type, list));
         }
+        System.out.println();
     }
 
     public static void merge() {
