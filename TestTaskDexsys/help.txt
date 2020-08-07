@@ -1,8 +1,10 @@
+
 Application has next commands:
 init array	- initialization of list with values of "array". Values must be convert to integer. For example: "init -3 -1 0 +1 7"
 print 		- print all lists
-print type 	- print one list with type X, S or M. For example: "print X"
-anyMore		- display on the true or false depending on were there values during initialization that did not appear in any list
-clear type	- clear list with type X, S, M: "clear X"
+print type 	- print one list with type L3, L7 or L21. For example: "print L3"
+anyMore		- display on console true or false depending on were there values during initialization that did not appear in any list
+clear type	- clear list with type L3, L7, L21: "clear L21"
 merge		- merge all lists into one, display on the console and clear all list
 help		- get info about all on application commands
+

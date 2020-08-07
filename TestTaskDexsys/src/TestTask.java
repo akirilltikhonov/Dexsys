@@ -24,7 +24,7 @@ public class TestTask {
 //    24 23 22 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1
 //    0 -1 -3 -7 -14 -18 -21
     public static void main(String[] args) throws IOException {
-        System.out.println("The application receives on the input nothing or string array consisting of integer value. " +
+        System.out.println("The application receives on the input nothing or string array consisting of integer value.\n" +
                 "For example, \" -3 -1 0 1 3 7\".\n" +
                 "Three lists are displayed on the console which are divided without remainder by 3, 7 and 21.\n" +
                 "Call 'help' to get all applications commands.\n");
@@ -60,43 +60,8 @@ public class TestTask {
                 else if (("help").equals(str)) help();
                 else System.out.println("Incorrect command. Call 'help' and try again");
 
-//                    switch (str) {
-//                        case "print":
-//                            printAll();
-//                            break;
-//                        case "print list3":
-//                            print(list3, Type.X);
-//                            break;
-//                        case "print list7":
-//                            print(list7, Type.S);
-//                            break;
-//                        case "print list21":
-//                            print(list21, Type.M);
-//                            break;
-//                        case "clear list3":
-//                            list3.clear();
-//                            break;
-//                        case "clear list7":
-//                            list7.clear();
-//                            break;
-//                        case "clear list21":
-//                            list21.clear();
-//                            break;
-//                        case "merge":
-//                            merge();
-//                            break;
-//                        case "anyMore":
-//                            anyMore();
-//                            break;
-//                        case "help":
-//                            help();
-//                            break;
-//                        default:
-//                            System.out.println("Incorrect command. Call 'help' and try again");
-//                            break;
-//                    }
             }
-            System.out.println("Exit program. Goodbye");
+            System.out.println("\nExiting program. Goodbye");
         }
     }
 
