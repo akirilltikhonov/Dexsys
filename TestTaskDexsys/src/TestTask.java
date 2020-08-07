@@ -31,7 +31,7 @@ public class TestTask {
         try {
             init(args);
         } catch (NumberFormatException e) {
-            System.out.println("Incorrect program arguments. " +
+            System.out.println("Incorrect input program arguments. " +
                     "The application receives on the input nothing or string array consisting of integer value.");
             System.exit(0);
         }
