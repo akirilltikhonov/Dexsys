@@ -46,7 +46,6 @@ public class TestTask {
                 if (str.matches("init(\\s[-+]?\\d+)+\\s*")) {
                     String[] array = str.substring(5).split(" ");
                     init(array);
-
                 }
                 else if ("print".equals(str)) printAll();
                 else if (("print " + Type.L3).equals(str)) print(list3, Type.L3);
@@ -58,7 +57,7 @@ public class TestTask {
                 else if (("merge").equals(str)) merge();
                 else if (("anyMore").equals(str)) anyMore();
                 else if (("help").equals(str)) help();
-                else System.out.println("Incorrect command. Call 'help' and try again");
+                else System.out.println("Incorrect command. Call 'help' and try again\n");
 
             }
             System.out.println("\nExiting program. Goodbye");
@@ -90,16 +89,19 @@ public class TestTask {
             Collections.sort(list3);
             Collections.sort(list7);
             Collections.sort(list21);
+
+        System.out.println();
     }
 
     public static void anyMore() {
-        System.out.println(anyMore);
+        System.out.println(anyMore + "\n");
     }
 
     static public void printAll() {
         print(list3, Type.L3);
         print(list7, Type.L7);
         print(list21, Type.L21);
+        System.out.println();
     }
 
     static public void print(List<Integer> list, Type type) {
@@ -113,6 +115,7 @@ public class TestTask {
     public static void merge() {
 //        System.out.println(Stream.of(list3, list7, list21).flatMap(x -> x.stream()).sorted().collect(Collectors.toList()));
         System.out.println((Set) Stream.of(list3, list7, list21).flatMap(x -> x.stream()).collect(Collectors.toCollection(TreeSet::new)));
+        System.out.println();
         list3.clear();
         list7.clear();
         list21.clear();
@@ -125,5 +128,4 @@ public class TestTask {
             e.printStackTrace();
         }
     }
-
 }
