@@ -1,6 +1,7 @@
 
 Application has next commands:
-init array	- initialization of list with values of "array". Values must be convert to integer. For example: "init -3 -1 0 +1 7"
+init array	- initialization of list with values of "array". Values must be convert to double.
+              For example: "init -3 -1 0 +1 7" or "-15.d -12.f -9. -6.0f -3.0d +0f 3d 6.00 +09.0"
 print 		- print all lists
 print type 	- print one list with type L3, L7 or L21. For example: "print L3"
 anyMore		- display on console true or false depending on were there values during initialization that did not appear in any list
