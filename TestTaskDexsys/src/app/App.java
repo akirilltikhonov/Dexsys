@@ -56,7 +56,6 @@ public class App implements IApp {
         anyMore = false;
 
         for (String arg : array) {
-//            int num = Integer.parseInt(arg);
             double num = Double.parseDouble(arg);
             boolean flag3;
             boolean flag7;
