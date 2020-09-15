@@ -112,7 +112,7 @@ public class App implements IApp {
 
     public void help() {
         try {
-            Files.readAllLines(Paths.get("help.txt")).stream().forEach(x -> System.out.println(x));
+            Files.readAllLines(Paths.get("help.txt")).forEach(System.out::println);
         } catch (IOException e) {
             e.printStackTrace();
         }
