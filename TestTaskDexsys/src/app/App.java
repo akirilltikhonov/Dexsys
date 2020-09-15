@@ -24,7 +24,7 @@ public class App implements IApp {
 
     public void mainLoop() throws IOException {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-            String str = null;
+            String str;
             while (!(str = reader.readLine()).equals("exit")) {
                 // regex only for integer "init(\\s[-+]?\\d+)+\\s*"
                 // regex for integer and decimal numbers "init(\\s[-+]?\\d+(.\\d+)?)+\\s*"
@@ -112,7 +112,7 @@ public class App implements IApp {
 
     public void help() {
         try {
-            Files.readAllLines(Paths.get("help.txt")).stream().forEach(x -> System.out.println(x));
+            Files.readAllLines(Paths.get("help.txt")).forEach(System.out::println);
         } catch (IOException e) {
             e.printStackTrace();
         }
