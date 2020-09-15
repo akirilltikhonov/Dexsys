@@ -103,7 +103,6 @@ public class App implements IApp {
     }
 
     public void merge() {
-//        System.out.println(Stream.of(listDividedBy3, listDividedBy7, listDividedBy21).flatMap(x -> x.stream()).sorted().collect(Collectors.toList()));
         System.out.println((Set) Stream.of(listDividedBy3, listDividedBy7, listDividedBy21).flatMap(x -> x.stream()).collect(Collectors.toCollection(TreeSet::new)));
         System.out.println();
         listDividedBy3.clear();
