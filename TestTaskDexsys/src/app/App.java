@@ -32,7 +32,7 @@ public class App implements IApp {
                 // regex only for integer "init(\\s[-+]?\\d+)+\\s*"
                 // regex for integer and decimal numbers "init(\\s[-+]?\\d+(.\\d+)?)+\\s*"
                 // regex for Integer, Float and Double in all entry forms (almost) "init(\\s[-+]?\\d*((\\.\\d*))?(d|f)?)+\\s*"
-                if (str.matches("init(\\s[-+]?\\d+((\\.\\d*))?(d|f)?)+\\s*")) {
+                if (str.matches("init(\\s[-+]?\\d+((\\.\\d*))?([df])?)+\\s*")) {
                     String[] array = str.substring(5).split(" ");
                     init(array);
                 } else if ("print".equals(str)) printAll();
