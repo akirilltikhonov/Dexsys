@@ -16,7 +16,7 @@ public class App implements IApp {
     List<Integer> listDividedBy3 = new ArrayList<>();
     List<Integer> listDividedBy7 = new ArrayList<>();
     List<Integer> listDividedBy21 = new ArrayList<>();
-    boolean anyMore = false;
+    List<Double> listNotDivided = new ArrayList<>();
 
     public void info() {
         System.out.println("The application receives on the input nothing or string array consisting of integer or/and float/double values.\n" +
@@ -56,9 +56,9 @@ public class App implements IApp {
         listDividedBy3.clear();
         listDividedBy7.clear();
         listDividedBy21.clear();
-        anyMore = false;
+        listNotDivided.clear();
 
-// Command anyMore works with it
+//        Old version
 //        for (String arg : array) {
 //            double num = Double.parseDouble(arg);
 //            boolean flag3;
@@ -82,15 +82,20 @@ public class App implements IApp {
 //            }
 //        }
 
-        List<Double> initArray = Stream.of(array).map(Double::parseDouble).collect(Collectors.toList());
-        listDividedBy3.addAll(getListDividedBy(initArray.stream(), 3));
-        listDividedBy7.addAll(getListDividedBy(initArray.stream(), 7));
+        listNotDivided = Stream.of(array).map(Double::parseDouble).distinct().collect(Collectors.toList());
+        listDividedBy3.addAll(getListDividedBy(listNotDivided.stream(), 3));
+        listDividedBy7.addAll(getListDividedBy(listNotDivided.stream(), 7));
 
         listDividedBy21.addAll(listDividedBy3.stream().filter(num -> num % 7 == 0).collect(Collectors.toList()));
+
+        listNotDivided.removeAll(listDividedBy3.stream().map(num -> (double)num).collect(Collectors.toList()));
+        listNotDivided.removeAll(listDividedBy7.stream().map(num -> (double)num).collect(Collectors.toList()));
+        listNotDivided.removeAll(listDividedBy21.stream().map(num -> (double)num).collect(Collectors.toList()));
 
         Collections.sort(listDividedBy3);
         Collections.sort(listDividedBy7);
         Collections.sort(listDividedBy21);
+        Collections.sort(listNotDivided);
         System.out.println();
     }
 
@@ -101,7 +106,7 @@ public class App implements IApp {
     }
 
     public void anyMore() {
-        System.out.println(anyMore + "\n");
+        System.out.println("Values that aren't included in any of the lists: " + listNotDivided + "\n");
     }
 
     public void printAll() {
