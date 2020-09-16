@@ -106,7 +106,7 @@ public class App implements IApp {
     }
 
     public void anyMore() {
-        System.out.println("Values that aren't included in any of the lists: " + listNotDivided + "\n");
+        System.out.println("Values that aren't included in any of the lists during initialization: " + listNotDivided + "\n");
     }
 
     public void printAll() {
