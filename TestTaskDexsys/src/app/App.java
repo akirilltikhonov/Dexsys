@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -55,29 +58,40 @@ public class App implements IApp {
         listDividedBy21.clear();
         anyMore = false;
 
-        for (String arg : array) {
-//            int num = Integer.parseInt(arg);
-            double num = Double.parseDouble(arg);
-            boolean flag3;
-            boolean flag7;
-            if (flag3 = (num % 3 == 0)) {
-                if (!listDividedBy3.contains((int) num)) {
-                    listDividedBy3.add((int) num);
-                }
-            }
-            if (flag7 = (num % 7 == 0)) {
-                if (!listDividedBy7.contains((int) num)) {
-                    listDividedBy7.add((int) num);
-                }
-            }
-            if (flag3 && flag7) {
-                if (!listDividedBy21.contains((int) num)) {
-                    listDividedBy21.add((int) num);
-                }
-            } else if (!anyMore && !(flag3 || flag7)) {
-                anyMore = true;
-            }
-        }
+// Command anyMore works with it
+//        for (String arg : array) {
+//            double num = Double.parseDouble(arg);
+//            boolean flag3;
+//            boolean flag7;
+//            if (flag3 = (num % 3 == 0)) {
+//                if (!listDividedBy3.contains((int) num)) {
+//                    listDividedBy3.add((int) num);
+//                }
+//            }
+//            if (flag7 = (num % 7 == 0)) {
+//                if (!listDividedBy7.contains((int) num)) {
+//                    listDividedBy7.add((int) num);
+//                }
+//            }
+//            if (flag3 && flag7) {
+//                if (!listDividedBy21.contains((int) num)) {
+//                    listDividedBy21.add((int) num);
+//                }
+//            } else if (!anyMore && !(flag3 || flag7)) {
+//                anyMore = true;
+//            }
+//        }
+
+        listDividedBy3.addAll(Stream.of(array).map(Double::parseDouble)
+                .filter(num -> num % 3 == 0).map(i -> (int) (double) i).distinct()
+                .collect(Collectors.toList()));
+
+        listDividedBy7.addAll(Stream.of(array).map(Double::parseDouble)
+                .filter(num -> num % 7 == 0).map(i -> (int) (double) i).distinct()
+                .collect(Collectors.toList()));
+
+        listDividedBy21.addAll(listDividedBy3.stream().filter(num -> num % 7 == 0).collect(Collectors.toList()));
+
         Collections.sort(listDividedBy3);
         Collections.sort(listDividedBy7);
         Collections.sort(listDividedBy21);
@@ -105,7 +119,7 @@ public class App implements IApp {
 
     public void merge() {
         System.out.println("Merged list: "
-                + Stream.of(listDividedBy3, listDividedBy7, listDividedBy21).flatMap(x -> x.stream()).distinct().collect(Collectors.toList()));
+                + Stream.of(listDividedBy3, listDividedBy7, listDividedBy21).flatMap(Collection::stream).distinct().collect(Collectors.toList()));
         System.out.println();
         listDividedBy3.clear();
         listDividedBy7.clear();
