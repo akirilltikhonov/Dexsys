@@ -82,13 +82,9 @@ public class App implements IApp {
 //            }
 //        }
 
-        listDividedBy3.addAll(Stream.of(array).map(Double::parseDouble)
-                .filter(num -> num % 3 == 0).map(i -> (int) (double) i).distinct()
-                .collect(Collectors.toList()));
-
-        listDividedBy7.addAll(Stream.of(array).map(Double::parseDouble)
-                .filter(num -> num % 7 == 0).map(i -> (int) (double) i).distinct()
-                .collect(Collectors.toList()));
+        List<Double> initArray = Stream.of(array).map(Double::parseDouble).collect(Collectors.toList());
+        listDividedBy3.addAll(getListDividedBy(initArray.stream(), 3));
+        listDividedBy7.addAll(getListDividedBy(initArray.stream(), 7));
 
         listDividedBy21.addAll(listDividedBy3.stream().filter(num -> num % 7 == 0).collect(Collectors.toList()));
 
@@ -96,6 +92,12 @@ public class App implements IApp {
         Collections.sort(listDividedBy7);
         Collections.sort(listDividedBy21);
         System.out.println();
+    }
+
+    public List<Integer> getListDividedBy(Stream<Double> doubleStream, int div) {
+        return doubleStream.filter(num -> num % div == 0)
+                .map(i -> (int) (double) i).distinct()
+                .collect(Collectors.toList());
     }
 
     public void anyMore() {
