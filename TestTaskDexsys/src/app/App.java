@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -13,7 +16,7 @@ public class App implements IApp {
     List<Integer> listDividedBy3 = new ArrayList<>();
     List<Integer> listDividedBy7 = new ArrayList<>();
     List<Integer> listDividedBy21 = new ArrayList<>();
-    boolean anyMore = false;
+    List<Double> listNotDivided = new ArrayList<>();
 
     public void info() {
         System.out.println("The application receives on the input nothing or string array consisting of integer or/and float/double values.\n" +
@@ -53,38 +56,57 @@ public class App implements IApp {
         listDividedBy3.clear();
         listDividedBy7.clear();
         listDividedBy21.clear();
-        anyMore = false;
+        listNotDivided.clear();
 
-        for (String arg : array) {
-            double num = Double.parseDouble(arg);
-            boolean flag3;
-            boolean flag7;
-            if (flag3 = (num % 3 == 0)) {
-                if (!listDividedBy3.contains((int) num)) {
-                    listDividedBy3.add((int) num);
-                }
-            }
-            if (flag7 = (num % 7 == 0)) {
-                if (!listDividedBy7.contains((int) num)) {
-                    listDividedBy7.add((int) num);
-                }
-            }
-            if (flag3 && flag7) {
-                if (!listDividedBy21.contains((int) num)) {
-                    listDividedBy21.add((int) num);
-                }
-            } else if (!anyMore && !(flag3 || flag7)) {
-                anyMore = true;
-            }
-        }
+//        Old version
+//        for (String arg : array) {
+//            double num = Double.parseDouble(arg);
+//            boolean flag3;
+//            boolean flag7;
+//            if (flag3 = (num % 3 == 0)) {
+//                if (!listDividedBy3.contains((int) num)) {
+//                    listDividedBy3.add((int) num);
+//                }
+//            }
+//            if (flag7 = (num % 7 == 0)) {
+//                if (!listDividedBy7.contains((int) num)) {
+//                    listDividedBy7.add((int) num);
+//                }
+//            }
+//            if (flag3 && flag7) {
+//                if (!listDividedBy21.contains((int) num)) {
+//                    listDividedBy21.add((int) num);
+//                }
+//            } else if (!anyMore && !(flag3 || flag7)) {
+//                anyMore = true;
+//            }
+//        }
+
+        listNotDivided = Stream.of(array).map(Double::parseDouble).distinct().collect(Collectors.toList());
+        listDividedBy3.addAll(getListDividedBy(listNotDivided.stream(), 3));
+        listDividedBy7.addAll(getListDividedBy(listNotDivided.stream(), 7));
+
+        listDividedBy21.addAll(listDividedBy3.stream().filter(num -> num % 7 == 0).collect(Collectors.toList()));
+
+        listNotDivided.removeAll(listDividedBy3.stream().map(num -> (double)num).collect(Collectors.toList()));
+        listNotDivided.removeAll(listDividedBy7.stream().map(num -> (double)num).collect(Collectors.toList()));
+        listNotDivided.removeAll(listDividedBy21.stream().map(num -> (double)num).collect(Collectors.toList()));
+
         Collections.sort(listDividedBy3);
         Collections.sort(listDividedBy7);
         Collections.sort(listDividedBy21);
+        Collections.sort(listNotDivided);
         System.out.println();
     }
 
+    public List<Integer> getListDividedBy(Stream<Double> doubleStream, int div) {
+        return doubleStream.filter(num -> num % div == 0)
+                .map(i -> (int) (double) i).distinct()
+                .collect(Collectors.toList());
+    }
+
     public void anyMore() {
-        System.out.println(anyMore + "\n");
+        System.out.println("Values that aren't included in any of the lists: " + listNotDivided + "\n");
     }
 
     public void printAll() {
@@ -97,13 +119,14 @@ public class App implements IApp {
         if (list.size() == 0) {
             System.out.println("List " + type + " is empty");
         } else {
-            System.out.println(String.format("List %s : %s", type, list));
+            System.out.println(String.format("List %s: %s", type, list));
         }
         System.out.println();
     }
 
     public void merge() {
-        System.out.println((Set) Stream.of(listDividedBy3, listDividedBy7, listDividedBy21).flatMap(x -> x.stream()).collect(Collectors.toCollection(TreeSet::new)));
+        System.out.println("Merged list: "
+                + Stream.of(listDividedBy3, listDividedBy7, listDividedBy21).flatMap(Collection::stream).distinct().collect(Collectors.toList()));
         System.out.println();
         listDividedBy3.clear();
         listDividedBy7.clear();
