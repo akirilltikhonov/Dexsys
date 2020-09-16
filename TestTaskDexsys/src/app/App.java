@@ -98,14 +98,14 @@ public class App implements IApp {
         if (list.size() == 0) {
             System.out.println("List " + type + " is empty");
         } else {
-            System.out.println(String.format("List %s : %s", type, list));
+            System.out.println(String.format("List %s: %s", type, list));
         }
         System.out.println();
     }
 
     public void merge() {
-//        System.out.println(Stream.of(listDividedBy3, listDividedBy7, listDividedBy21).flatMap(x -> x.stream()).sorted().collect(Collectors.toList()));
-        System.out.println((Set) Stream.of(listDividedBy3, listDividedBy7, listDividedBy21).flatMap(x -> x.stream()).collect(Collectors.toCollection(TreeSet::new)));
+        System.out.println("Merged list: "
+                + Stream.of(listDividedBy3, listDividedBy7, listDividedBy21).flatMap(x -> x.stream()).distinct().collect(Collectors.toList()));
         System.out.println();
         listDividedBy3.clear();
         listDividedBy7.clear();
